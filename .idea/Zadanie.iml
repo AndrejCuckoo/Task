@@ -102,6 +102,7 @@
       <excludeFolder url="file://$MODULE_DIR$/Zadanie/vendor/fakerphp/faker" />
       <excludeFolder url="file://$MODULE_DIR$/Zadanie/vendor/hamcrest/hamcrest-php" />
       <excludeFolder url="file://$MODULE_DIR$/Zadanie/vendor/fideloper/proxy" />
+      <excludeFolder url="file://$MODULE_DIR$/Zadanie/vendor/laravel/ui" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

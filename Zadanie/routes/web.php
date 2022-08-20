@@ -13,10 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'MainController@home' );
 
-Route::get('/KEKW', function () {
-    return view('about');
-});
+Route::get('/StudCreate', 'MainController@about');
+
+Route::post('/StudCreate/Check', 'MainController@Stud_check');
+
+
+
+//Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
+
+
