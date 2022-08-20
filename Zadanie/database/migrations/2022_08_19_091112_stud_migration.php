@@ -13,11 +13,9 @@ class StudMigration extends Migration
      */
     public function up()
     {
-        Schema::create('studentss', function (Blueprint $table) {
+        Schema::create('Students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
-            $table->string('grade');
         });
     }
 
@@ -28,6 +26,6 @@ class StudMigration extends Migration
      */
     public function down()
     {
-        //
+        //Schema::dropIfExists('Students');
     }
 }
