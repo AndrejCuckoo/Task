@@ -22,7 +22,7 @@
     </form>
     <br>
 
-    <h1>Удаление студента</h1>
+    <h1>Удаление предмета</h1>
 
     @if($errors->any())
         <div class="alert alert-danger">
@@ -37,14 +37,14 @@
     <form method="post" action="/SubjectDelete/Check">
         @csrf
         <input type="SubjectDelete" name="SubjectDelete" id="SubjectDelete" placeholder="Введите id предмета" class="form-control" style="width: 400px; padding-left: 10px;"><br>
-        <button type="submit" class="btn btn-success">Добавить</button>
+        <button type="submit" class="btn btn-success">Удалить</button>
     </form>
 
     <br>
-    <h1>Студенты</h1>
-    @foreach($cont as $el)
+    <h1>Дисциплины</h1>
+    @foreach($conte as $el)
         <div class="alert alert-warning">
-            <h3>{{$el->name}}</h3>
+            <h3>{{$el->subject}}</h3>
             <h5>id: {{ $el->id}}</h5>
         </div>
     @endforeach

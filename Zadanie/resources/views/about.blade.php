@@ -37,7 +37,7 @@
     <form method="post" action="/StudDelete/Check">
         @csrf
         <input type="StudDelete" name="StudDelete" id="StudDelete" placeholder="Введите id студента" class="form-control" style="width: 400px; padding-left: 10px;"><br>
-        <button type="submit" class="btn btn-success">Добавить</button>
+        <button type="submit" class="btn btn-success">Удалить</button>
     </form>
 
     <br>

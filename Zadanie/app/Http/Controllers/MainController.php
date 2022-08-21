@@ -13,21 +13,12 @@ class MainController extends Controller
     }
 
     public function about(){
-        $cont = new StudModel();
+        //$cont = new StudModel();
         $users = DB::table('stud_models')->get();
         //DB::delete('delete from stud_models where id = 5');
 
 
         return view('about',['cont' => $users->all()]);
-    }
-
-    public function Stud_delete(Request $request){
-        //$cont = new StudModel();
-        //$users = DB::table('stud_models')->get();
-        //DB::delete('delete from stud_models where id = 5');
-        $index = $request->input('StudDelete');
-        DB::delete('delete from stud_models where id = ?',[$index]);
-        return redirect()->route('StudCreate');
     }
 
     public function Stud_check(Request $request){
@@ -43,4 +34,43 @@ class MainController extends Controller
         return redirect()->route('StudCreate');
     }
 
+    public function Stud_delete(Request $request){
+        //$cont = new StudModel();
+        //$users = DB::table('stud_models')->get();
+        //DB::delete('delete from stud_models where id = 5');
+        $index = $request->input('StudDelete');
+        DB::delete('delete from stud_models where id = ?',[$index]);
+        return redirect()->route('StudCreate');
+    }
+
+    public function Subject(){
+        //$cont = new StudModel();
+        $subjec = DB::table('subjects')->get();
+        //DB::delete('delete from stud_models where id = 5');
+
+
+        return view('subjects',['conte' => $subjec->all()]);
+    }
+
+    public function Subject_check(Request $request){
+        $valid = $request->validate([
+            'Subject' => 'required'
+        ]);
+
+
+        $index = $request->input('Subject');
+        DB::table('subjects')->insert(
+            ['subject' => $index]
+        );
+
+
+        return redirect()->route('SubjectCreate');
+    }
+
+    public function Subject_delete(Request $req){
+
+        $ind = $req->input('SubjectDelete');
+        DB::delete('delete from subjects where id = ?',[$ind]);
+        return redirect()->route('SubjectCreate');
+    }
 }
