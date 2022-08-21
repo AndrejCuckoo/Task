@@ -18,7 +18,7 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/" class="nav-link px-2 link-secondary">Главная страница</a></li>
             <li><a href="/StudCreate" class="nav-link px-2 link-secondary">Создание студента</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">Создание дисциплины</a></li>
+            <li><a href="/SubjectCreate" class="nav-link px-2 link-dark">Создание дисциплины</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">Привязка студента к дисциплине</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">Отображение всех студентов по дисциплине</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">Проставление оценки</a></li>

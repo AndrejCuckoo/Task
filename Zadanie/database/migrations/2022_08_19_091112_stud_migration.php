@@ -13,10 +13,17 @@ class StudMigration extends Migration
      */
     public function up()
     {
-        Schema::create('Students', function (Blueprint $table) {
+        //Schema::rename('stud_models', 'Students');
+        Schema::create('stud_models', function (Blueprint $table) {
             $table->id();
             $table->string('name');
         });
+
+        Schema::create('subjects', function (Blueprint $table) {
+            $table->id();
+            $table->string('subject');
+        });
+
     }
 
     /**
@@ -26,6 +33,7 @@ class StudMigration extends Migration
      */
     public function down()
     {
-        //Schema::dropIfExists('Students');
+        Schema::dropIfExists('stud_models');
+        Schema::dropIfExists('subjects');
     }
 }

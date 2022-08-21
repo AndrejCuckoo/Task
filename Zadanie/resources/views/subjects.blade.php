@@ -1,9 +1,9 @@
 @extends('layoutHeader')
 
-@section('title')Создание студента@endsection
+@section('title')Добавление предмета@endsection
 
 @section('main_content')
-    <h1>Добавление студента</h1>
+    <h1>Добавление предмета</h1>
 
     @if($errors->any())
         <div class="alert alert-danger">
@@ -15,9 +15,9 @@
         </div>
     @endif
 
-    <form method="post" action="/StudCreate/Check">
+    <form method="post" action="/SubjectCreate/Check">
         @csrf
-        <input type="Stud" name="Stud" id="Stud" placeholder="Введите ФИО студента" class="form-control" style="width: 400px; padding-left: 10px;"><br>
+        <input type="Subject" name="Subject" id="Subject" placeholder="Введите название предмета" class="form-control" style="width: 400px; padding-left: 10px;"><br>
         <button type="submit" class="btn btn-success">Добавить</button>
     </form>
     <br>
@@ -34,9 +34,9 @@
         </div>
     @endif
 
-    <form method="post" action="/StudDelete/Check">
+    <form method="post" action="/SubjectDelete/Check">
         @csrf
-        <input type="StudDelete" name="StudDelete" id="StudDelete" placeholder="Введите id студента" class="form-control" style="width: 400px; padding-left: 10px;"><br>
+        <input type="SubjectDelete" name="SubjectDelete" id="SubjectDelete" placeholder="Введите id предмета" class="form-control" style="width: 400px; padding-left: 10px;"><br>
         <button type="submit" class="btn btn-success">Добавить</button>
     </form>
 
@@ -50,4 +50,3 @@
     @endforeach
 
 @endsection
-

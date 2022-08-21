@@ -103,6 +103,10 @@
       <path value="$PROJECT_DIR$/Zadanie/vendor/hamcrest/hamcrest-php" />
       <path value="$PROJECT_DIR$/Zadanie/vendor/fideloper/proxy" />
       <path value="$PROJECT_DIR$/Zadanie/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/Zadanie/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/Zadanie/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/Zadanie/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/Zadanie/vendor/doctrine/cache" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
