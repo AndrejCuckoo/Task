@@ -13,7 +13,6 @@ class StudMigration extends Migration
      */
     public function up()
     {
-        //Schema::rename('stud_models', 'Students');
         Schema::create('stud_models', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -24,6 +23,12 @@ class StudMigration extends Migration
             $table->string('subject');
         });
 
+        Schema::create('conn', function (Blueprint $table) {
+            $table->id();
+            $table->string('StudId');
+            $table->string('SubjectId');
+            $table->string('Grade')->nullable();
+        });
     }
 
     /**
@@ -35,5 +40,6 @@ class StudMigration extends Migration
     {
         Schema::dropIfExists('stud_models');
         Schema::dropIfExists('subjects');
+        Schema::dropIfExists('conn');
     }
 }

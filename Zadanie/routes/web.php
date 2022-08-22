@@ -27,6 +27,12 @@ Route::post('/SubjectCreate/Check', 'MainController@Subject_check');
 
 Route::post('/SubjectDelete/Check', 'MainController@Subject_delete');
 
+Route::get('/connectionID', 'MainController@connectionID')->name('connectionID');;
+
+Route::post('/connectionID/Check', 'MainController@connectionID_check');
+
+Route::post('/connectionIDDelete/Check', 'MainController@connectionID_delete');
+
 //Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
