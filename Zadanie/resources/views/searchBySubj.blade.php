@@ -21,8 +21,13 @@
         <button type="submit" class="btn btn-success">Добавить</button>
     </form>
     <br>
-    <h3>{{$content}}</h3>
 
+    @foreach($content as $el)
+        <div class="alert alert-warning">
+            <h3>{{$el->StudId}}</h3>
+            <h5>id: {{ $el->id}}</h5>
+        </div>
+    @endforeach
 
 
 @endsection

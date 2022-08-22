@@ -44,7 +44,7 @@ class MainController extends Controller
         //$cont = new StudModel();
         $subjec = DB::table('subjects')->get();
 
-        return view('subjects',['conte' => $subjec->all()]);
+        return view('subjects',['conte' => $subjec]);
     }
 
     public function Subject_check(Request $request){
@@ -105,7 +105,7 @@ class MainController extends Controller
 
     public function searchBySubject(Request $request){
         //$searchBy = DB::table('conn')->get();
-        return view('searchBySubj',['content' => Null]);
+        return view('searchBySubj',['content' => []]);
     }
 
     public function searchBySubject_check(Request $request){
@@ -116,10 +116,14 @@ class MainController extends Controller
 
         $indexSubj = $request->input('Subj');
 
-        $indSub = DB::table('subjects')->where('subject',$indexSubj)->value('id');
+        $idSubj = DB::table('subjects')->where('subject',$indexSubj)->value('id');
 
+        $idStud = DB::table('conn')->where('SubjectId',$idSubj)->get();
 
-        return view('searchBySubj',['content' => $indSub]);
+        //dd($idStud->toArray()[0]->id);
+        $Stud = DB::table('stud_models')->whereIn('id',[5,6,7])->get();
+        //dd($idStud);
+        return view('searchBySubj',['content' => $idStud]);
 
     }
 
