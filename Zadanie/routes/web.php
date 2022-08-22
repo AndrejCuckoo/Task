@@ -33,6 +33,10 @@ Route::post('/connectionID/Check', 'MainController@connectionID_check');
 
 Route::post('/connectionIDDelete/Check', 'MainController@connectionID_delete');
 
+Route::get('/searchBySubject', 'MainController@searchBySubject')->name('searchBySubject');
+
+Route::post('/searchBySubject/Check', 'MainController@searchBySubject_check');
+
 //Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

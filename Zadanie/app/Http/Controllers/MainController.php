@@ -71,14 +71,6 @@ class MainController extends Controller
     }
 
     public function connectionID(){
-        //$conns = DB::table('conn')->get();
-        //$conn = DB::table('stud_models')->get();
-        //$first = DB::table('stud_models')->get();
-        //$second = DB::table('subjects');
-
-        /*$sizes = DB::table('stud_models')
-            ->crossJoin('subjects')
-            ->get();*/
 
         return view('connectionID');
     }
@@ -110,4 +102,25 @@ class MainController extends Controller
         DB::delete('delete from subjects where id = ?',[$ind]);
         return redirect()->route('SubjectCreate');
     }
+
+    public function searchBySubject(Request $request){
+        //$searchBy = DB::table('conn')->get();
+        return view('searchBySubj',['content' => Null]);
+    }
+
+    public function searchBySubject_check(Request $request){
+        $valid = $request->validate([
+            'Subj' => 'required|min:1',
+        ]);
+
+
+        $indexSubj = $request->input('Subj');
+
+        $indSub = DB::table('subjects')->where('subject',$indexSubj)->value('id');
+
+
+        return view('searchBySubj',['content' => $indSub]);
+
+    }
+
 }

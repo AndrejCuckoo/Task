@@ -15,14 +15,14 @@
         </div>
     @endif
 
-    <form method="post" action="/SubjectCreate/Check">
+    <form method="post" action="/searchBySubject/Check">
         @csrf
         <input type="Subj" name="Subj" id="Subj" placeholder="Введите название предмета" class="form-control" style="width: 400px; padding-left: 10px;"><br>
         <button type="submit" class="btn btn-success">Добавить</button>
     </form>
     <br>
+    <h3>{{$content}}</h3>
 
-    <h1>Удаление предмета</h1>
 
 
 @endsection
