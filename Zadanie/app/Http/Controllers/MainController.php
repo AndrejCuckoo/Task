@@ -119,11 +119,14 @@ class MainController extends Controller
         $idSubj = DB::table('subjects')->where('subject',$indexSubj)->value('id');
 
         $idStud = DB::table('conn')->where('SubjectId',$idSubj)->get();
-
-        //dd($idStud->toArray()[0]->id);
-        $Stud = DB::table('stud_models')->whereIn('id',[5,6,7])->get();
         //dd($idStud);
-        return view('searchBySubj',['content' => $idStud]);
+        $StudT = $idStud->toArray();
+        //dd($idStud->toArray()[0]->id);
+        $Stud = array_column($StudT,'StudId');
+        $StudT = DB::table('stud_models')->whereIn('id',$Stud)->get();
+
+        //dd($Stud);
+        return view('searchBySubj',['content' => $StudT]);
 
     }
 

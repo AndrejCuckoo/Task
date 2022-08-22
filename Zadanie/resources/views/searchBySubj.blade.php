@@ -24,7 +24,7 @@
 
     @foreach($content as $el)
         <div class="alert alert-warning">
-            <h3>{{$el->StudId}}</h3>
+            <h3>{{$el->name}}</h3>
             <h5>id: {{ $el->id}}</h5>
         </div>
     @endforeach
