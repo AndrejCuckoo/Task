@@ -72,6 +72,32 @@ class MainController extends Controller
 
     public function connectionID(){
 
+
+        //$tablConn = DB::table('conn')->get();
+        //$tempTablConn = $tablConn->toArray();
+
+        //$tempTableStud = array_combine(array_keys($tempTablConn), array_column($tempTablConn, 'StudId'));
+        //$tempTableSubj = array_combine(array_keys($tempTablConn), array_column($tempTablConn, 'SubjectId'));
+
+
+
+        //$idStud = DB::table('stud_models')->whereIn('id',$tempTableStud)->get();
+
+        //$idSubj = DB::table('subjects')->whereIn('id',$tempTableSubj)->get();
+        //dd($idStud);
+
+        //$idSubj = DB::table('subjects')->where('subject',$indexSubj)->value('id');
+
+
+        //dd($idStud);
+        //$StudT = $idStud->toArray();
+        //dd($idStud->toArray()[0]->id);
+        //$Stud = array_column($StudT,'StudId');
+        //$Student = DB::table('stud_models')->whereIn('id',$Stud)->get();
+
+        //dd($Stud);
+        //return view('searchBySubj',['content' => $Student]);
+
         return view('connectionID',['err' => '']);
     }
 
@@ -89,6 +115,13 @@ class MainController extends Controller
 
         $idSubjCheck = DB::table('subjects')->where('id',$indSub)->value('subject');
         $idStudCheck = DB::table('stud_models')->where('id',$indexStud)->value('name');
+
+        $idSubjAlready = DB::table('conn')->where('StudId',$indexStud)->value('StudId');
+        $idStudAlready = DB::table('conn')->where('SubjectId',$indSub)->value('SubjectId');
+
+        if($idSubjAlready != NULL and $idStudAlready != NULL){
+            return view('connectionID',['err' => 'Данная связь уже существует']);
+        }
 
         if($idSubjCheck == NULL){
             return view('connectionID',['err' => 'Данный предмет отсутствует']);
@@ -109,9 +142,9 @@ class MainController extends Controller
 
     public function connectionID_delete(Request $req){
 
-        $ind = $req->input('SubjectDelete');
-        DB::delete('delete from subjects where id = ?',[$ind]);
-        return redirect()->route('SubjectCreate');
+        $ind = $req->input('IDDelete');
+        DB::delete('delete from conn where id = ?',[$ind]);
+        return redirect()->route('connectionID');
     }
 
     public function searchBySubject(Request $request){

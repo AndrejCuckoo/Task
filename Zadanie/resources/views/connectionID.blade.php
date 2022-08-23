@@ -37,7 +37,7 @@
 
     <form method="post" action="/connectionIDDelete/Check">
         @csrf
-        <input type="StudIDDelete" name="StudIDDelete" id="StudIDDelete" placeholder="Введите id студента" class="form-control" style="width: 400px; padding-left: 10px;"><br>
+        <input type="IDDelete" name="IDDelete" id="IDDelete" placeholder="Введите id связки" class="form-control" style="width: 400px; padding-left: 10px;"><br>
         <button type="submit" class="btn btn-success">Удалить</button>
     </form>
 
