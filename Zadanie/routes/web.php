@@ -37,6 +37,10 @@ Route::get('/searchBySubject', 'MainController@searchBySubject')->name('searchBy
 
 Route::post('/searchBySubject/Check', 'MainController@searchBySubject_check');
 
+Route::get('/Grade', 'MainController@Grade')->name('Grade');
+
+Route::post('/Grade/Check', 'MainController@Grade_check');
+
 //Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

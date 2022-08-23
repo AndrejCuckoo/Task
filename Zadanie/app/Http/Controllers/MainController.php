@@ -130,4 +130,33 @@ class MainController extends Controller
 
     }
 
+    public function Grade(){
+
+        $users = DB::table('stud_models')->get();
+
+        return view('grades');
+    }
+
+    public function Grade_check(Request $request){
+        $valid = $request->validate([
+            'SubjGrade' => 'required',
+            'StudGradeID' => 'required|numeric',
+            'Grade' => 'required|numeric|min:0|max:5'
+        ]);
+
+        $indexSubjGrade = $request->input('SubjGrade');
+        $indexStudGrade = $request->input('StudGradeID');
+        $indexGrade = $request->input('Grade');
+
+
+        $idSubj = DB::table('subjects')->where('subject',$indexSubjGrade)->value('id');
+        DB::table('conn')
+            ->where('SubjectId', $idSubj)
+            ->where('StudId', $indexStudGrade)
+            ->update(['Grade' => $indexGrade]);
+
+
+
+        return redirect()->route('Grade');
+    }
 }

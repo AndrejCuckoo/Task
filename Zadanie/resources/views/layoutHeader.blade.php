@@ -21,7 +21,7 @@
             <li><a href="/SubjectCreate" class="nav-link px-2 link-dark">Создание дисциплины</a></li>
             <li><a href="/connectionID" class="nav-link px-2 link-dark">Привязка студента к дисциплине</a></li>
             <li><a href="/searchBySubject" class="nav-link px-2 link-dark">Отображение всех студентов по дисциплине</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">Проставление оценки</a></li>
+            <li><a href="/Grade" class="nav-link px-2 link-dark">Проставление оценки</a></li>
         </ul>
     </header>
 </div>
