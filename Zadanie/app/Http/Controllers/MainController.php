@@ -72,7 +72,7 @@ class MainController extends Controller
 
     public function connectionID(){
 
-        return view('connectionID');
+        return view('connectionID',['err' => '']);
     }
 
     public function connectionID_check(Request $request){
@@ -86,6 +86,17 @@ class MainController extends Controller
         $indexSubj = $request->input('Subject');
 
         $indSub = DB::table('subjects')->where('subject',$indexSubj)->value('id');
+
+        $idSubjCheck = DB::table('subjects')->where('id',$indSub)->value('subject');
+        $idStudCheck = DB::table('stud_models')->where('id',$indexStud)->value('name');
+
+        if($idSubjCheck == NULL){
+            return view('connectionID',['err' => 'Данный предмет отсутствует']);
+        }
+
+        if($idStudCheck == NULL){
+            return view('connectionID',['err' => 'Данный студент отсутствует']);
+        }
 
         DB::table('conn')->insert(
             ['StudId' => $indexStud,
@@ -134,7 +145,7 @@ class MainController extends Controller
 
         $users = DB::table('stud_models')->get();
 
-        return view('grades');
+        return view('grades',['erro' => NULL]);
     }
 
     public function Grade_check(Request $request){
@@ -149,7 +160,20 @@ class MainController extends Controller
         $indexGrade = $request->input('Grade');
 
 
+
         $idSubj = DB::table('subjects')->where('subject',$indexSubjGrade)->value('id');
+
+        $idSubjCheck = DB::table('subjects')->where('subject',$indexSubjGrade)->value('id');
+        $idStudCheck = DB::table('subjects')->where('subject',$indexSubjGrade)->value('id');
+
+        if($idSubjCheck == NULL){
+            return view('grades',['erro' => 'Данный предмет отсутствует']);
+        }
+
+        if($idStudCheck == NULL){
+            return view('grades',['erro' => 'Данный студент отсутствует']);
+        }
+
         DB::table('conn')
             ->where('SubjectId', $idSubj)
             ->where('StudId', $indexStudGrade)
