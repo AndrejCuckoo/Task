@@ -134,10 +134,10 @@ class MainController extends Controller
         $StudT = $idStud->toArray();
         //dd($idStud->toArray()[0]->id);
         $Stud = array_column($StudT,'StudId');
-        $StudT = DB::table('stud_models')->whereIn('id',$Stud)->get();
+        $Student = DB::table('stud_models')->whereIn('id',$Stud)->get();
 
         //dd($Stud);
-        return view('searchBySubj',['content' => $StudT]);
+        return view('searchBySubj',['content' => $Student]);
 
     }
 
