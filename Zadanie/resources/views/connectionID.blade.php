@@ -41,6 +41,13 @@
         <button type="submit" class="btn btn-success">Удалить</button>
     </form>
 
-
+    @foreach($contente as $el)
+        <div class="alert alert-warning">
+            <h3>ФИО: {{$el->name}}</h3>
+            <h3>Предмет: {{$el->subject}}</h3>
+            <h3>Оценка: {{$el->Grade}}</h3>
+            <h5>id связки: {{ $el->id}}</h5>
+        </div>
+    @endforeach
 
 @endsection

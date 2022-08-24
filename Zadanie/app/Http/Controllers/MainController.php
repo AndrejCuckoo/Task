@@ -72,33 +72,17 @@ class MainController extends Controller
 
     public function connectionID(){
 
-
-        //$tablConn = DB::table('conn')->get();
-        //$tempTablConn = $tablConn->toArray();
-
-        //$tempTableStud = array_combine(array_keys($tempTablConn), array_column($tempTablConn, 'StudId'));
-        //$tempTableSubj = array_combine(array_keys($tempTablConn), array_column($tempTablConn, 'SubjectId'));
-
-
-
-        //$idStud = DB::table('stud_models')->whereIn('id',$tempTableStud)->get();
-
-        //$idSubj = DB::table('subjects')->whereIn('id',$tempTableSubj)->get();
-        //dd($idStud);
-
-        //$idSubj = DB::table('subjects')->where('subject',$indexSubj)->value('id');
-
-
-        //dd($idStud);
-        //$StudT = $idStud->toArray();
-        //dd($idStud->toArray()[0]->id);
-        //$Stud = array_column($StudT,'StudId');
-        //$Student = DB::table('stud_models')->whereIn('id',$Stud)->get();
-
-        //dd($Stud);
-        //return view('searchBySubj',['content' => $Student]);
-
-        return view('connectionID',['err' => '']);
+        $sel = DB::select('SELECT
+            stud_models.name,
+            subjects.subject,
+            conn.Grade,
+            conn.id
+        FROM stud_models
+        JOIN conn
+        ON stud_models.id = conn.StudId
+        JOIN subjects
+        ON subjects.id = conn.SubjectId;');
+        return view('connectionID',['contente' => $sel]);
     }
 
     public function connectionID_check(Request $request){
@@ -148,7 +132,6 @@ class MainController extends Controller
     }
 
     public function searchBySubject(Request $request){
-        //$searchBy = DB::table('conn')->get();
         return view('searchBySubj',['content' => []]);
     }
 
@@ -172,7 +155,6 @@ class MainController extends Controller
             ->whereIn('StudId',$Stud)
             -> join('stud_models','stud_models.id','=','conn.StudId')
             ->get();
-
 
 
         return view('searchBySubj',['content' => $Joined]);
