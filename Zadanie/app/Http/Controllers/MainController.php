@@ -163,14 +163,19 @@ class MainController extends Controller
         $idSubj = DB::table('subjects')->where('subject',$indexSubj)->value('id');
 
         $idStud = DB::table('conn')->where('SubjectId',$idSubj)->get();
-        //dd($idStud);
-        $StudT = $idStud->toArray();
-        //dd($idStud->toArray()[0]->id);
-        $Stud = array_column($StudT,'StudId');
-        $Student = DB::table('stud_models')->whereIn('id',$Stud)->get();
 
-        //dd($Stud);
-        return view('searchBySubj',['content' => $Student]);
+        $StudT = $idStud->toArray();
+
+        $Stud = array_column($StudT,'StudId');
+
+        $Joined = DB::table('conn')
+            ->whereIn('StudId',$Stud)
+            -> join('stud_models','stud_models.id','=','conn.StudId')
+            ->get();
+
+
+
+        return view('searchBySubj',['content' => $Joined]);
 
     }
 

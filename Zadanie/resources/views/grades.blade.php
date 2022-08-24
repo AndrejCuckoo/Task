@@ -24,7 +24,7 @@
     </form>
     <br>
 
-    <h3>Ошибка: {{$erro}}</h3>
+    <h3>{{$erro}}</h3>
 
 
 @endsection

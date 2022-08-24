@@ -25,6 +25,7 @@
     @foreach($content as $el)
         <div class="alert alert-warning">
             <h3>{{$el->name}}</h3>
+            <h5>Оценка: {{ $el->Grade}}</h5>
             <h5>id: {{ $el->id}}</h5>
         </div>
     @endforeach
