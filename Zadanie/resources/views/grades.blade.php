@@ -21,10 +21,19 @@
         <input type="StudGradeID" name="StudGradeID" id="StudGradeID" placeholder="Введите id студента" class="form-control" style="width: 400px; padding-left: 10px;"><br>
         <input type="Grade" name="Grade" id="Grade" placeholder="Введите оценку" class="form-control" style="width: 400px; padding-left: 10px;"><br>
         <button type="submit" class="btn btn-success">Поставить оценку</button>
+
+
     </form>
+
+
+
     <br>
 
-    <h3>{{$erro}}</h3>
+    @foreach($subje as $el)
+        <div class="alert alert-warning">
+            <h3>{{$el->subject}}</h3>
+        </div>
+    @endforeach
 
 
 @endsection

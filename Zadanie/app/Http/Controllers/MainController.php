@@ -86,10 +86,7 @@ class MainController extends Controller
     }
 
     public function connectionID_check(Request $request){
-        $valid = $request->validate([
-            'StudID' => 'required|numeric|min:1',
-            'Subject' => 'required'
-        ]);
+
 
 
         $indexStud = $request->input('StudID');
@@ -100,10 +97,10 @@ class MainController extends Controller
         $idSubjCheck = DB::table('subjects')->where('id',$indSub)->value('subject');
         $idStudCheck = DB::table('stud_models')->where('id',$indexStud)->value('name');
 
-        $idSubjAlready = DB::table('conn')->where('StudId',$indexStud)->value('StudId');
-        $idStudAlready = DB::table('conn')->where('SubjectId',$indSub)->value('SubjectId');
+        $idStudAlready = DB::table('conn')->where('StudId',$indexStud)->value('StudId');
+        $idSubjAlready = DB::table('conn')->where('SubjectId',$indSub)->value('SubjectId');
 
-        if($idSubjAlready != NULL and $idStudAlready != NULL){
+        if(($idSubjAlready != NULL) and ($idStudAlready != NULL)){
             return view('connectionID',['err' => 'Данная связь уже существует']);
         }
 
@@ -143,29 +140,30 @@ class MainController extends Controller
 
         $indexSubj = $request->input('Subj');
 
-        $idSubj = DB::table('subjects')->where('subject',$indexSubj)->value('id');
+        $sel = DB::select('SELECT
+            stud_models.name,
+            subjects.subject,
+            conn.Grade,
+            conn.id
+        FROM stud_models
+        JOIN conn
+        ON stud_models.id = conn.StudId
+        JOIN subjects
+        ON subjects.id = conn.SubjectId;');
 
-        $idStud = DB::table('conn')->where('SubjectId',$idSubj)->get();
+        $tempSel = collect($sel);
+        $TSel = $tempSel ->whereIn('subject',$indexSubj);
 
-        $StudT = $idStud->toArray();
-
-        $Stud = array_column($StudT,'StudId');
-
-        $Joined = DB::table('conn')
-            ->whereIn('StudId',$Stud)
-            -> join('stud_models','stud_models.id','=','conn.StudId')
-            ->get();
-
-
-        return view('searchBySubj',['content' => $Joined]);
+        return view('searchBySubj',['content' => $TSel]);
 
     }
 
     public function Grade(){
 
-        $users = DB::table('stud_models')->get();
 
-        return view('grades',['erro' => NULL]);
+        $users = DB::table('subjects')->get();
+
+        return view('grades',['subje' => $users]);
     }
 
     public function Grade_check(Request $request){

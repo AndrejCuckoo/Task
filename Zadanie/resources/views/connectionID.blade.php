@@ -40,7 +40,7 @@
         <input type="IDDelete" name="IDDelete" id="IDDelete" placeholder="Введите id связки" class="form-control" style="width: 400px; padding-left: 10px;"><br>
         <button type="submit" class="btn btn-success">Удалить</button>
     </form>
-
+    <br>
     @foreach($contente as $el)
         <div class="alert alert-warning">
             <h3>ФИО: {{$el->name}}</h3>
