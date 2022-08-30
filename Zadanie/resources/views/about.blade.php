@@ -72,6 +72,18 @@
                     @click="deleteName">
                     Удалить
                 </v-btn>
+                <br>
+                <v-btn
+                    @click="showTable">
+                    KEK
+                </v-btn>
+                <br>
+                <br>
+                <v-data-table
+                    :headers="headers"
+                    :items="users"
+                    class="">
+                </v-data-table>
             </v-main>
 
         </v-app>
@@ -89,6 +101,17 @@
                     FIO:'Фамилия имя отчество',
                     nameID: 'ID студента',
                     vis: true,
+                    users: [],
+                    headers: [
+                        {
+                            text: '#',
+                            align: 'start',
+                            sortable: false,
+                            value: 'id',
+                        },
+
+                        { text: 'Name', value: 'name' },
+                    ],
                 })},
             methods:{
                 sendName(){
@@ -110,7 +133,28 @@
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         body:data
                     })
+                },
+                showTable(){
+                    let data = new FormData()
+                    //data.append('shwTable',this.FIO)
+                    //this.vis = (this.vis == true) ? false : true
+                    fetch('showTable',{
+                        method:'GET',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    })
+                        .then((response)=>{
+                            return response.json()
+                        })
+                        .then((data)=>{
+                            this.users = data.users
+                            //console.log(data.users)
+                        })
+
                 }
+            },
+            mounted: function (){
+                console.log("SCP")
+                this.showTable();
             }
         })
     </script>

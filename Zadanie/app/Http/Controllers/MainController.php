@@ -223,6 +223,14 @@ class MainController extends Controller
 
     }
 
+    public function showTable(){
 
+        //$items = DB::select('id', 'name', 'slug')->where('order', 1)->get();
+        $users = DB::table('stud_models')->get();
+        //return view('about',['cont' => $users->all()]);
+
+        return response()->json(['users' => $users]);
+
+    }
 
 }

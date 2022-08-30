@@ -44,6 +44,8 @@ Route::post('/Grade/Check', 'MainController@Grade_check');
 
 Route::post('/sendName' ,'MainController@sendName','sendName');
 Route::post('/deleteName' ,'MainController@deleteName','deleteName');
+Route::get('/showTable' ,'MainController@showTable','showTable');
+
 //Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
