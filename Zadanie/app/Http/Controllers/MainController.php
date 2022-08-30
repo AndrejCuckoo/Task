@@ -201,4 +201,28 @@ class MainController extends Controller
 
         return redirect()->route('Grade');
     }
+
+    public function index(){
+        return view('welcome');
+    }
+
+    public function sendName(request $request){
+
+        $index = $request->input('FIO');
+        DB::table('stud_models')->insert(
+            ['name' => $index]
+        );
+
+    }
+
+    public function deleteName(request $request){
+
+        $index = $request->input('deleteID');
+        DB::delete('delete from stud_models where id = ?',[$index]);
+        DB::delete('delete from conn where StudId = ?',[$index]);
+
+    }
+
+
+
 }
