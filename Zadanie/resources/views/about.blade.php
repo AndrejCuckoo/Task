@@ -50,11 +50,10 @@
     @endforeach
 
 <!--        NEW CODE        -->
-
+    <h1>New Code</h1>
     <div class="flex-center position-ref full-height" id="MainVue">
         <v-app>
             <v-main>
-                <v-container>New Code</v-container>
                 <v-text-field
                     v-model="FIO">
                 </v-text-field>
@@ -73,19 +72,34 @@
                     Удалить
                 </v-btn>
                 <br>
-                <v-btn
-                    @click="showTable">
-                    KEK
-                </v-btn>
                 <br>
                 <br>
+                <h3>Удаление студента</h3>
                 <v-data-table
+                    v-model="selected"
                     :headers="headers"
                     :items="users"
-                    class="">
+                    :single-select=true
+                    show-select
+                    class="elevation-1"
+                    :search="search">
+                    <template v-slot:top>
+                        <v-text-field
+                            v-model="search"
+                            label="Поиск"
+                            class="mx-4"
+                        ></v-text-field>
+                        <v-btn
+                            @click="showTable">
+                            Обновить таблицу
+                        </v-btn>
+                        <v-btn
+                            @click="deleteByName">
+                            Удилить по выбраному
+                        </v-btn>
+                    </template>
                 </v-data-table>
             </v-main>
-
         </v-app>
     </div>
 
@@ -102,6 +116,8 @@
                     nameID: 'ID студента',
                     vis: true,
                     users: [],
+                    search: '',
+                    selected: [],
                     headers: [
                         {
                             text: '#',
@@ -109,13 +125,14 @@
                             sortable: false,
                             value: 'id',
                         },
-
+                        { text: 'ID', value: 'id' },
                         { text: 'Name', value: 'name' },
                     ],
                 })},
             methods:{
                 sendName(){
                     let data = new FormData()
+
                     data.append('FIO',this.FIO)
                     //this.vis = (this.vis == true) ? false : true
                     fetch('sendName',{
@@ -150,7 +167,19 @@
                             //console.log(data.users)
                         })
 
-                }
+                },
+                deleteByName(){
+                    let data = new FormData()
+                    let result = this.selected.map(({ id }) => id);
+                    nameID = result[0]
+                    data.append('deleteID',nameID)
+                    //this.vis = (this.vis == true) ? false : true
+                    fetch('deleteName',{
+                        method:'POST',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        body:data
+                    })
+                },
             },
             mounted: function (){
                 console.log("SCP")
