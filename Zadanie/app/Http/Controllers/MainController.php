@@ -285,4 +285,15 @@ class MainController extends Controller
 
     }
 
+    public function GradeSelect(request $request){
+
+        $index = $request->input('resulted');
+        $Grade = $request->input('grad');
+
+        DB::table('conn')
+            ->where('id', $index)
+            ->update(['Grade' => $Grade]);
+
+    }
+
 }

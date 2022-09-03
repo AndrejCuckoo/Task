@@ -73,7 +73,7 @@
                 </v-btn>
                 <br>
                 <br>
-                <br>b
+                <br>
                 <h3>Удаление студента</h3>
                 <v-data-table
                     v-model="selected"

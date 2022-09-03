@@ -51,6 +51,8 @@ Route::get('/showTableSubj' ,'MainController@showTableSubj','showTableSubj');
 Route::post('/createConnection' ,'MainController@createConnection','createConnection');
 Route::post('/deleteConnection' ,'MainController@deleteConnection','deleteConnection');
 
+Route::post('/GradeSelect' ,'MainController@GradeSelect','GradeSelect');
+
 
 //Auth::routes();
 
