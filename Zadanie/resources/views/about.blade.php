@@ -58,7 +58,7 @@
                     v-model="FIO">
                 </v-text-field>
                 <v-btn
-                    @click="sendName">
+                    @click="sendName();showTable()">
                     Добавить
                 </v-btn>
                 <br>
@@ -68,12 +68,12 @@
                     v-model="nameID">
                 </v-text-field>
                 <v-btn
-                    @click="deleteName">
+                    @click="deleteName();showTable()">
                     Удалить
                 </v-btn>
                 <br>
                 <br>
-                <br>
+                <br>b
                 <h3>Удаление студента</h3>
                 <v-data-table
                     v-model="selected"
@@ -90,12 +90,8 @@
                             class="mx-4"
                         ></v-text-field>
                         <v-btn
-                            @click="showTable">
-                            Обновить таблицу
-                        </v-btn>
-                        <v-btn
-                            @click="deleteByName">
-                            Удилить по выбраному
+                            @click="deleteByName();showTable()">
+                            Удалить по выбраному
                         </v-btn>
                     </template>
                 </v-data-table>
@@ -120,13 +116,11 @@
                     selected: [],
                     headers: [
                         {
-                            text: '#',
                             align: 'start',
                             sortable: false,
-                            value: 'id',
                         },
                         { text: 'ID', value: 'id' },
-                        { text: 'Name', value: 'name' },
+                        { text: 'ФИО', value: 'name' },
                     ],
                 })},
             methods:{

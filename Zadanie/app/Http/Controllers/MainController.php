@@ -233,4 +233,56 @@ class MainController extends Controller
 
     }
 
+    public function showTableSubj(){
+        //$cont = new StudModel();
+        $subjec = DB::table('subjects')->get();
+
+        //return view('subjects',['subj' => $subjec]);
+        return response()->json(['subje' => $subjec]);
+    }
+
+    public function showTableConnection(){
+
+        //$items = DB::select('id', 'name', 'slug')->where('order', 1)->get();
+        //$users = DB::table('stud_models')->get();
+        $sel = DB::select('SELECT
+            stud_models.name,
+            subjects.subject,
+            conn.Grade,
+            conn.id
+        FROM stud_models
+        JOIN conn
+        ON stud_models.id = conn.StudId
+        JOIN subjects
+        ON subjects.id = conn.SubjectId;');
+        //return view('about',['cont' => $users->all()]);
+
+        return response()->json(['subj' => $sel]);
+
+    }
+
+
+    public function createConnection(Request $request){
+
+
+
+        $idStud = $request->input('nameStud');
+        $idSubj = $request->input('nameSubj');
+
+
+
+        DB::table('conn')->insert(
+            ['StudId' => $idStud,
+                'SubjectId' => $idSubj
+            ]);
+
+    }
+
+    public function deleteConnection(request $request){
+
+        $index = $request->input('deleteID');
+        DB::delete('delete from conn where id = ?',[$index]);
+
+    }
+
 }

@@ -45,6 +45,12 @@ Route::post('/Grade/Check', 'MainController@Grade_check');
 Route::post('/sendName' ,'MainController@sendName','sendName');
 Route::post('/deleteName' ,'MainController@deleteName','deleteName');
 Route::get('/showTable' ,'MainController@showTable','showTable');
+Route::get('/showTableConnection' ,'MainController@showTableConnection','showTableConnection');
+Route::get('/showTableSubj' ,'MainController@showTableSubj','showTableSubj');
+
+Route::post('/createConnection' ,'MainController@createConnection','createConnection');
+Route::post('/deleteConnection' ,'MainController@deleteConnection','deleteConnection');
+
 
 //Auth::routes();
 
