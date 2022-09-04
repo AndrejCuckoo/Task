@@ -53,6 +53,7 @@ Route::post('/deleteConnection' ,'MainController@deleteConnection','deleteConnec
 
 Route::post('/GradeSelect' ,'MainController@GradeSelect','GradeSelect');
 
+Route::post('/searchBySubjectTable' ,'MainController@searchBySubjectTable','searchBySubjectTable');
 
 //Auth::routes();
 

@@ -54,7 +54,6 @@
     <div class="flex-center position-ref full-height" id="MainVue">
         <v-app>
             <v-main>
-
                 <h3>Просмотр привязок</h3>
                 <v-data-table
                     v-model="selected"
@@ -157,7 +156,7 @@
                             align: 'start',
                             sortable: false,
                         },
-                        { text: 'ID привязки', value: 'id' },
+                        { text: 'ID', value: 'id' },
                         { text: 'ФИО', value: 'name' },
                     ],
                     headers2: [
@@ -165,7 +164,7 @@
                             align: 'start',
                             sortable: false,
                         },
-                        { text: 'ID привязки', value: 'id' },
+                        { text: 'ID', value: 'id' },
                         { text: 'Предмет', value: 'subject' },
                     ],
                 })},

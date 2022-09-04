@@ -296,4 +296,23 @@ class MainController extends Controller
 
     }
 
+    public function searchBySubjectTable(Request $request){
+
+        $indexSubj = $request->input('searchTable');
+
+        $sel = DB::select('SELECT
+            stud_models.name,
+            conn.Grade,
+            subjects.id
+        FROM stud_models
+        JOIN conn
+        ON stud_models.id = conn.StudId
+        JOIN subjects
+        ON subjects.id = conn.SubjectId;');
+
+        $tempSel = collect($sel);
+        $TSel = $tempSel ->whereIn('id',$indexSubj);
+
+        return response()->json(['contente' => $TSel]);
+    }
 }
