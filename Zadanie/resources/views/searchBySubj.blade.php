@@ -88,6 +88,7 @@
             data(){
                 return({
                     users: [],
+                    users_: [],
                     subjs:[],
                     search: '',
                     searchSubj: '',
@@ -98,8 +99,12 @@
                             sortable: false,
                         },
                         { text: 'ФИО', value: 'name' },
-                        { text: 'Оценка', value: 'Grade' },
                         { text: 'ID', value: 'id' },
+                        { text: 'Предмет', value: 'subject' },
+                        { text: 'KM1', value: 'KM1' },
+                        { text: 'KM2', value: 'KM2' },
+                        { text: 'KM3', value: 'KM3' },
+                        { text: 'KM4', value: 'KM4' },
                     ],
                     headers2: [
                         {
@@ -111,7 +116,47 @@
                     ],
                 })},
             methods:{
+                Studs_fill(){
+                    let this_ = this
+                    this.users = []
+                    //console.log('This',this.users_[0].id)
+                    let id_stud=this.users_[0].id
+                    //console.log("ID",id_stud)
+                    let row = {id:'',name:'',subject:'',KM1:'0',KM2:'0',KM3:'0',KM4:'0'}
+                    this.users_.forEach(function fun (curVal){
+                        //console.log('Grade =',this_.users_)
+                        if(curVal.id === id_stud){
 
+                        }else{
+                            //console.log("ROW = ",row)
+                            this_.users.push(row)
+                            row = {id:'',name:'',subject:'',KM1:'0',KM2:'0',KM3:'0',KM4:'0'}
+                            id_stud = curVal.id
+                        }
+                        row['id'] = curVal.id
+                        row['name'] = curVal.name
+                        row['subject'] = curVal.subject
+
+                        if(curVal.KM_Num==1){
+                            row['KM1']=curVal.Grade
+
+                        }
+                        else if(curVal.KM_Num==2){
+                            row['KM2']=curVal.Grade
+                        }
+                        else if(curVal.KM_Num==3){
+                            row['KM3']=curVal.Grade
+                        }
+                        else if(curVal.KM_Num==4){
+                            row['KM4']=curVal.Grade
+                        }
+                        console.log(row)
+                        //console.log(curVal.Grade)
+                    })
+
+                    this_.users.push(row)
+
+                },
                 showTableSubj(){
                     let data = new FormData()
                     fetch('showTableSubj',{
@@ -123,7 +168,6 @@
                         })
                         .then((data)=>{
                             this.subjs = data.subje
-                            //console.log(data.users)
                         })
 
 
@@ -132,7 +176,7 @@
                 showTable(){
                     let data = new FormData()
 
-                    let result = this.selectedSubj.map(({ id }) => id)
+                    let result = this.selectedSubj.map(({ subject }) => subject)
                     //console.log(result[0])
                     data.append('searchTable',result[0])
                     //this.vis = (this.vis == true) ? false : true
@@ -145,9 +189,11 @@
                             return response.json()
                         })
                         .then((data)=>{
-                            temp = data.contente
-                            arr = Object.values(temp)
-                            this.users = arr
+                            tem = data.contente
+                            arr = Object.values(tem)
+                            this.users_ = arr
+                            //console.log("KEKKK",arr[0])
+                            this.Studs_fill()
                         })
 
                 },

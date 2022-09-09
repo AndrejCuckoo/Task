@@ -96,11 +96,11 @@
 
                 })},
             methods:{
-                showTable(){
+                async showTable(){
                     let data = new FormData()
                     //data.append('shwTable',this.FIO)
                     //this.vis = (this.vis == true) ? false : true
-                    fetch('showTableConnection',{
+                    await fetch('showTableConnection',{
                         method:'GET',
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     })
@@ -113,7 +113,7 @@
                         })
 
                 },
-                clk(){
+                async clk(){
                     let data = new FormData()
 
                     let result = this.selected.map(({ id }) => id);
@@ -122,7 +122,7 @@
                     data.append('resulted',resulted)
                     data.append('grad',this.Grad)
 
-                    fetch('GradeSelect',{
+                    await fetch('GradeSelect',{
                         method:'POST',
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         body:data

@@ -28,6 +28,7 @@ class StudMigration extends Migration
             $table->string('StudId');
             $table->string('SubjectId');
             $table->string('Grade')->nullable();
+            $table->string('KM_Num')->nullable();
         });
     }
 

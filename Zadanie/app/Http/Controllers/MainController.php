@@ -303,15 +303,19 @@ class MainController extends Controller
         $sel = DB::select('SELECT
             stud_models.name,
             conn.Grade,
-            subjects.id
+            subjects.subject,
+            conn.KM_Num,
+            conn.SubjectId,
+            stud_models.id
         FROM stud_models
         JOIN conn
         ON stud_models.id = conn.StudId
         JOIN subjects
-        ON subjects.id = conn.SubjectId;');
+        ON subjects.id = conn.SubjectId
+        ORDER BY stud_models.id,conn.KM_Num;');
 
         $tempSel = collect($sel);
-        $TSel = $tempSel ->whereIn('id',$indexSubj);
+        $TSel = $tempSel ->whereIn('subject',$indexSubj);
 
         return response()->json(['contente' => $TSel]);
     }
