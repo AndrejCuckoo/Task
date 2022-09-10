@@ -34,24 +34,35 @@
         <v-app>
             <v-main>
                 <h4>Выбор предмета</h4>
-                <v-data-table
-                    v-model="selectedSubj"
-                    :headers="headers2"
+
+                <v-autocomplete
+                    label="Предметы"
                     :items="subjs"
-                    :single-select=true
-                    show-select
-                    class="elevation-1"
-                    :search="searchSubj">
-                    <template v-slot:top>
-                        <v-text-field
-                            v-model="searchSubj"
-                            label="Поиск"
-                            class="mx-4"
-                        ></v-text-field>
-                    </template>
-                </v-data-table>
+                    item-text="subject"
+                    v-model="selectedSubj"
+                    @change="showTable()"
+                    clearable
+                    filled
+                    rounded
+                    solo
+                ></v-autocomplete>
+
 
                 <h3>Просмотр студентов изучающих дисциплину</h3>
+
+                <v-autocomplete
+                    label="Студенты"
+                    :items="names"
+                    item-text="name"
+                    item-value="id"
+                    v-model="ids"
+                    @change="KEK()"
+                    clearable
+                    filled
+                    rounded
+                    solo
+                ></v-autocomplete>
+
 
                 <v-btn
                     @click="showTable()">
@@ -72,8 +83,6 @@
                 </v-data-table>
                 <br>
 
-
-
             </v-main>
         </v-app>
     </div>
@@ -87,8 +96,12 @@
             vuetify: new Vuetify(),
             data(){
                 return({
+
                     users: [],
+                    original_users: [],
+                    names:[],
                     users_: [],
+                    ids:[],
                     subjs:[],
                     search: '',
                     searchSubj: '',
@@ -116,6 +129,20 @@
                     ],
                 })},
             methods:{
+                KEK(){
+                    //console.log(this.original_users)
+                    let temp;
+                    if ((this.ids == '') || (this.ids == null)){
+                        this.users = this.original_users
+                    }else{
+                        temp = this.original_users.filter(ides => ides.id == this.ids);
+                        this.users = temp
+                    }
+
+                    //console.log('KEKW',this.users)
+                    //console.log('original_users',temp)
+                    //console.log('original_users',this.original_users)
+                },
                 Studs_fill(){
                     let this_ = this
                     this.users = []
@@ -150,12 +177,12 @@
                         else if(curVal.KM_Num==4){
                             row['KM4']=curVal.Grade
                         }
-                        console.log(row)
+                        //console.log(row)
                         //console.log(curVal.Grade)
                     })
 
                     this_.users.push(row)
-
+                    this.original_users = this_.users;
                 },
                 showTableSubj(){
                     let data = new FormData()
@@ -169,6 +196,25 @@
                         .then((data)=>{
                             this.subjs = data.subje
                         })
+                },
+
+                showTableUsersBySubj(){
+
+                    let data = new FormData()
+                    fetch('showTable',{
+                        method:'GET',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    })
+                        .then((response)=>{
+                            return response.json()
+                        })
+                        .then((data)=>{
+                            this.names = data.users
+                            //this.ids= temp.map(({ id }) => id)
+                            //this.names= temp.map(({ name }) => name)
+                            //console.log("NAmes",temp.map(({ name }) => name))
+                            //console.log("ids",this.ids)
+                        })
 
 
                 },
@@ -176,9 +222,10 @@
                 showTable(){
                     let data = new FormData()
 
-                    let result = this.selectedSubj.map(({ subject }) => subject)
-                    //console.log(result[0])
-                    data.append('searchTable',result[0])
+                    let result = this.selectedSubj//.map(({ subject }) => subject)
+                    //console.log("KEK",result[0])
+                    data.append('searchTable',result)
+                    console.log(result)
                     //this.vis = (this.vis == true) ? false : true
                     fetch('searchBySubjectTable',{
                         method:'POST',
@@ -202,6 +249,7 @@
             mounted: function (){
                 console.log("SCP")
                 this.showTableSubj();
+                this.showTableUsersBySubj();
             }
         })
     </script>

@@ -300,7 +300,7 @@ class MainController extends Controller
 
         $indexSubj = $request->input('searchTable');
 
-        $sel = DB::select('SELECT
+        $TSel = DB::select("SELECT
             stud_models.name,
             conn.Grade,
             subjects.subject,
@@ -311,11 +311,10 @@ class MainController extends Controller
         JOIN conn
         ON stud_models.id = conn.StudId
         JOIN subjects
-        ON subjects.id = conn.SubjectId
-        ORDER BY stud_models.id,conn.KM_Num;');
+        ON subjects.id = conn.SubjectId WHERE subject = '".$indexSubj."'
+        ORDER BY stud_models.id,conn.KM_Num;");
 
-        $tempSel = collect($sel);
-        $TSel = $tempSel ->whereIn('subject',$indexSubj);
+
 
         return response()->json(['contente' => $TSel]);
     }
