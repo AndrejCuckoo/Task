@@ -47,7 +47,6 @@
                     solo
                 ></v-autocomplete>
 
-
                 <h3>Просмотр студентов изучающих дисциплину</h3>
 
                 <v-autocomplete
@@ -68,11 +67,13 @@
                     @click="showTable()">
                     Показать
                 </v-btn>
+
                 <v-data-table
                     :headers="headers"
                     :items="users"
                     class="elevation-1"
-                    :search="search">
+                    :search="search"
+                    no-data-text="Ошибка">
                     <template v-slot:top>
                         <v-text-field
                             v-model="search"
@@ -80,8 +81,98 @@
                             class="mx-4"
                         ></v-text-field>
                     </template>
+                    <template
+                        v-slot:item._actions="{ item }"
+                    >
+                        <v-chip-group>
+
+
+                            <v-dialog
+                                v-model="dialog"
+                                width="800"
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                        color="red lighten-2"
+                                        dark
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    >
+                                        Click Me
+                                    </v-btn>
+                                </template>
+
+                                <v-card>
+                                    <v-card-title class="text-h5 grey lighten-2">
+                                        Privacy Policy
+                                    </v-card-title>
+
+                                    <v-card-text>
+                                        Изменение оценок по КМ'ом
+                                    </v-card-text>
+
+                                    <v-divider></v-divider>
+
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+
+                                        <v-text-field
+                                            v-model="selectKM"
+                                            label="Выбор КМа"
+                                            class="mx-4"
+                                        ></v-text-field>
+
+                                        <v-text-field
+                                            v-model="selectGrade"
+                                            label="Простановка оценки"
+                                            class="mx-4"
+                                        ></v-text-field>
+                                        <v-divider></v-divider>
+
+                                        <v-btn
+                                            color="primary"
+                                            text
+                                            icon @click="Help(item)"
+                                        >
+                                            Изменение
+                                        </v-btn>
+
+                                        <v-spacer></v-spacer>
+
+
+                                        <v-btn
+                                            color="primary"
+                                            text
+                                            @click="dialog = false"
+                                        >
+                                            Выйти
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+
+
+                            <v-btn
+                                icon @click="Help(item)">
+                                <v-icon>
+                                    mdi-pencil
+                                </v-icon>
+                            </v-btn>
+
+                            <v-btn icon @click="Help()">
+                                <v-icon
+                                >
+                                    mdi-delete
+                                </v-icon>
+                            </v-btn>
+                        </v-chip-group>
+                    </template>
+                    <template v-slot:top>
+                    </template>
                 </v-data-table>
+
                 <br>
+
 
             </v-main>
         </v-app>
@@ -102,8 +193,13 @@
                     names:[],
                     users_: [],
                     ids:[],
+                    dialog: false,
                     subjs:[],
+                    KEKS:[],
+                    item:[],
                     search: '',
+                    selectKM:'',
+                    selectGrade:'',
                     searchSubj: '',
                     selectedSubj:[],
                     headers: [
@@ -118,6 +214,7 @@
                         { text: 'KM2', value: 'KM2' },
                         { text: 'KM3', value: 'KM3' },
                         { text: 'KM4', value: 'KM4' },
+                        {text:'Изменить/удадлить',value:'_actions'},
                     ],
                     headers2: [
                         {
@@ -129,6 +226,14 @@
                     ],
                 })},
             methods:{
+
+                Help(item){
+                    //this.selectKM
+                    //this.selectGrade
+                    //item.id
+                    console.log(this.users[item.id-1])
+
+                },
                 KEK(){
                     //console.log(this.original_users)
                     let temp;

@@ -270,11 +270,13 @@ class MainController extends Controller
         $idSubj = $request->input('nameSubj');
 
 
-
-        DB::table('conn')->insert(
-            ['StudId' => $idStud,
-                'SubjectId' => $idSubj
-            ]);
+        for($Num=1;$Num < 5;$Num ++){
+            DB::table('conn')->insert(
+                ['StudId' => $idStud,
+                    'SubjectId' => $idSubj,
+                    'KM_Num' => $Num
+                ]);
+        }
 
     }
 
