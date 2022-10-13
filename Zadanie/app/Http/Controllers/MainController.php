@@ -313,11 +313,37 @@ class MainController extends Controller
         JOIN conn
         ON stud_models.id = conn.StudId
         JOIN subjects
-        ON subjects.id = conn.SubjectId WHERE subject = '".$indexSubj."'
+        ON subjects.id = conn.SubjectId WHERE subjects.id = ".$indexSubj."
         ORDER BY stud_models.id,conn.KM_Num;");
 
 
 
         return response()->json(['contente' => $TSel]);
     }
+
+    public function changeMark(Request $request){
+
+        $KMs = $request->input('KM');
+        $StudID = $request->input('StudID');
+        $SubjectID = $request->input('SubjectID');
+
+        for($step = 0; $step <= 3; $step ++){
+            DB::table('conn')
+                ->where('StudId', $StudID)
+                ->where('SubjectId', $SubjectID)
+                ->where('KM_Num', ($step + 1))
+                ->update(['Grade' => $KMs[$step]]);
+
+        }
+
+    }
+
+    public function delConn(Request $request)//удаление привязки
+    {
+        $idStud = $request->input('StudID');
+        $idSub = $request->input('SubjectID');
+
+        DB::delete("delete from conn where SubjectId = '".$idSub ."' and StudId = '".$idStud ."'");
+    }
+
 }

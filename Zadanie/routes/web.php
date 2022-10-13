@@ -55,6 +55,10 @@ Route::post('/GradeSelect' ,'MainController@GradeSelect','GradeSelect');
 
 Route::post('/searchBySubjectTable' ,'MainController@searchBySubjectTable','searchBySubjectTable');
 
+Route::post('/changeMark' ,'MainController@changeMark','changeMark');
+
+Route::post('/delConn' ,'MainController@delConn','delConn');
+
 //Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

@@ -5,31 +5,6 @@
 @section('main_content')
     <h1>Отображение студентов по дисциплине</h1>
 
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form method="post" action="/searchBySubject/Check">
-        @csrf
-        <input type="Subj" name="Subj" id="Subj" placeholder="Введите название предмета" class="form-control" style="width: 400px; padding-left: 10px;"><br>
-        <button type="submit" class="btn btn-success">Добавить</button>
-    </form>
-    <br>
-
-    @foreach($content as $el)
-        <div class="alert alert-warning">
-            <h3>ФИО: {{$el->name}}</h3>
-            <h3>Оценка: {{$el->Grade}}</h3>
-        </div>
-    @endforeach
-
-    <h1>New Code</h1>
     <div class="flex-center position-ref full-height" id="MainVue">
         <v-app>
             <v-main>
@@ -39,6 +14,7 @@
                     label="Предметы"
                     :items="subjs"
                     item-text="subject"
+                    item-value="id"
                     v-model="selectedSubj"
                     @change="showTable()"
                     clearable
@@ -55,7 +31,7 @@
                     item-text="name"
                     item-value="id"
                     v-model="ids"
-                    @change="KEK()"
+                    @change="forma()"
                     clearable
                     filled
                     rounded
@@ -84,88 +60,15 @@
                     <template
                         v-slot:item._actions="{ item }"
                     >
-                        <v-chip-group>
+                        <v-btn
+                            color="grey darker-2"
+                            dark
+                            @click="openChangeDialog(item)"
+                        >
+                            Изменить оценку
+                        </v-btn>
 
 
-                            <v-dialog
-                                v-model="dialog"
-                                width="800"
-                            >
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                        color="red lighten-2"
-                                        dark
-                                        v-bind="attrs"
-                                        v-on="on"
-                                    >
-                                        Click Me
-                                    </v-btn>
-                                </template>
-
-                                <v-card>
-                                    <v-card-title class="text-h5 grey lighten-2">
-                                        Privacy Policy
-                                    </v-card-title>
-
-                                    <v-card-text>
-                                        Изменение оценок по КМ'ом
-                                    </v-card-text>
-
-                                    <v-divider></v-divider>
-
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-
-                                        <v-text-field
-                                            v-model="selectKM"
-                                            label="Выбор КМа"
-                                            class="mx-4"
-                                        ></v-text-field>
-
-                                        <v-text-field
-                                            v-model="selectGrade"
-                                            label="Простановка оценки"
-                                            class="mx-4"
-                                        ></v-text-field>
-                                        <v-divider></v-divider>
-
-                                        <v-btn
-                                            color="primary"
-                                            text
-                                            icon @click="Help(item)"
-                                        >
-                                            Изменение
-                                        </v-btn>
-
-                                        <v-spacer></v-spacer>
-
-
-                                        <v-btn
-                                            color="primary"
-                                            text
-                                            @click="dialog = false"
-                                        >
-                                            Выйти
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-dialog>
-
-
-                            <v-btn
-                                icon @click="Help(item)">
-                                <v-icon>
-                                    mdi-pencil
-                                </v-icon>
-                            </v-btn>
-
-                            <v-btn icon @click="Help()">
-                                <v-icon
-                                >
-                                    mdi-delete
-                                </v-icon>
-                            </v-btn>
-                        </v-chip-group>
                     </template>
                     <template v-slot:top>
                     </template>
@@ -175,6 +78,76 @@
 
 
             </v-main>
+            <v-dialog
+                v-model="changeDialog"
+                width="800"
+            >
+
+                <v-card>
+                    <v-card-title class="text-h5 grey lighten-2">
+                        Изменение оценок по КМ'ом
+                    </v-card-title>
+
+                    <v-card-text>
+                        <v-text-field
+                            v-model="KM[0]"
+                            label="Простановка оценки KM 1"
+                            class="mx-4"
+                        ></v-text-field>
+
+                        <v-text-field
+                            v-model="KM[1]"
+                            label="Простановка оценки KM 2"
+                            class="mx-4"
+                        ></v-text-field>
+
+                        <v-text-field
+                            v-model="KM[2]"
+                            label="Простановка оценки KM 3"
+                            class="mx-4"
+
+                        ></v-text-field>
+
+                        <v-text-field
+                            v-model="KM[3]"
+                            label="Простановка оценки  KM 4"
+                            class="mx-4"
+                        ></v-text-field>
+
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+
+                        <v-divider></v-divider>
+
+                        <v-btn
+                            color="primary"
+                            text
+                            icon @click="changeMark()"
+                        >
+                            Изменение
+                        </v-btn>
+
+                        <v-spacer></v-spacer>
+
+
+                        <v-btn
+                            color="primary"
+                            text
+                            @click="changeDialog = false"
+                        >
+                            Выйти
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+
+            <!-- New dialog -->
+
+
         </v-app>
     </div>
 
@@ -189,14 +162,19 @@
                 return({
 
                     users: [],
+                    KM:[null,null,null,null],
                     original_users: [],
                     names:[],
                     users_: [],
                     ids:[],
-                    dialog: false,
+                    idsSubj:[],
+                    changeDialog: false,
                     subjs:[],
-                    KEKS:[],
-                    item:[],
+
+
+                    changeStud:0,
+                    changeSubj:0,
+
                     search: '',
                     selectKM:'',
                     selectGrade:'',
@@ -214,7 +192,7 @@
                         { text: 'KM2', value: 'KM2' },
                         { text: 'KM3', value: 'KM3' },
                         { text: 'KM4', value: 'KM4' },
-                        {text:'Изменить/удадлить',value:'_actions'},
+                        { text:'Изменить/удадлить',value:'_actions' },
                     ],
                     headers2: [
                         {
@@ -227,14 +205,50 @@
                 })},
             methods:{
 
-                Help(item){
-                    //this.selectKM
-                    //this.selectGrade
-                    //item.id
-                    console.log(this.users[item.id-1])
+                async changeMark(){
+                    let data = new FormData()
+
+                    //data.append('foo',this.JSON.stringify(this.KM))
+                    data.append('StudID',this.changeStud)
+                    data.append('SubjectID',this.selectedSubj)
+
+                    for (var i = 0; i < this.KM.length; i++) {
+                        data.append('KM[]', this.KM[i]);
+                    }
+
+                    //console.log(result)
+                    //this.vis = (this.vis == true) ? false : true
+                    await fetch('changeMark',{
+                        method:'POST',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        body:data
+                    })
+                        .then((response)=>{
+
+                            this.showTable();
+
+                            this.changeDialog = false
+
+                    })
 
                 },
-                KEK(){
+                openChangeDialog(item){
+                    //console.log('forma',this.KM)
+                    //console.log('Selected',this.KM)
+                    //console.log("KWWWW",this.KM)
+                    //this.changeStud
+                    //this.changeSubj
+
+                    this.changeStud = item.id
+                    this.KM[0] = item.KM1
+                    this.KM[1] = item.KM2
+                    this.KM[2] = item.KM3
+                    this.KM[3] = item.KM4
+
+                    this.changeDialog = true
+                    //this.item = item
+                },
+                forma(){
                     //console.log(this.original_users)
                     let temp;
                     if ((this.ids == '') || (this.ids == null)){
@@ -244,7 +258,7 @@
                         this.users = temp
                     }
 
-                    //console.log('KEKW',this.users)
+
                     //console.log('original_users',temp)
                     //console.log('original_users',this.original_users)
                 },
@@ -328,9 +342,9 @@
                     let data = new FormData()
 
                     let result = this.selectedSubj//.map(({ subject }) => subject)
-                    //console.log("KEK",result[0])
+
                     data.append('searchTable',result)
-                    console.log(result)
+                    //console.log(result)
                     //this.vis = (this.vis == true) ? false : true
                     fetch('searchBySubjectTable',{
                         method:'POST',
@@ -344,7 +358,7 @@
                             tem = data.contente
                             arr = Object.values(tem)
                             this.users_ = arr
-                            //console.log("KEKKK",arr[0])
+
                             this.Studs_fill()
                         })
 
